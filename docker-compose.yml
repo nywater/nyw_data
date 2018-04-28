@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+
+  mongo:
+    image: mongo
+    container_name: 'nyw_mongo'
+    ports:
+      - "27017:27017"
+
+  mongo_admin:
+    image: mongo-express
+    container_name: 'nyw_mongo_admin'
+    links:
+      - mongo
+    ports:
+      - "8081:8081"
+
+  jupyter:
+    build: ./jupyter
+    container_name: 'nyw_jupyter'
+    depends_on:
+      - mongo
+    links:
+      - mongo
+    ports:
+      - "8888:8888"
